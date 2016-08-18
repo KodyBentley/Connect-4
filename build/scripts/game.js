@@ -1064,14 +1064,12 @@ var Game = (function (_Phaser$State) {
 			if (this.playerCurrent === 0) {
 				var bird = this.birdsGroup.add(new _objectsBirds2['default'](this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
 				this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
-				console.log(this.grid.gridArr);
 
 				this.penguinFx.play();
 				this.playerCurrent += 1;
 			} else {
 				var bird = this.birdsGroup.add(new _objectsBirds2['default'](this.game, data.x, data.y, this.birds[1].frame, this, data.pos));
 				this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
-				console.log(this.grid.gridArr);
 
 				this.parrotFx.play();
 				this.playerCurrent -= 1;

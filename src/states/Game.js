@@ -79,7 +79,6 @@ export default class Game extends Phaser.State {
 		if (this.playerCurrent === 0) {
 			let bird = this.birdsGroup.add(new Birds(this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
 			this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
-			console.log(this.grid.gridArr);
 
 			this.penguinFx.play();
 			this.playerCurrent += 1;
@@ -87,7 +86,6 @@ export default class Game extends Phaser.State {
 		} else {
 			let bird = this.birdsGroup.add(new Birds(this.game, data.x, data.y, this.birds[1].frame, this, data.pos));
 			this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
-			console.log(this.grid.gridArr);
 
 
 			this.parrotFx.play();
