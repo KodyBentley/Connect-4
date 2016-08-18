@@ -63,6 +63,7 @@ export default class Game extends Phaser.State {
 		this.parrotFx = this.game.add.audio('parrotFx');
 		this.parrotFx.volume = 2;
 
+		
 
 
 	}
@@ -73,25 +74,33 @@ export default class Game extends Phaser.State {
 	addBird(x) {
 		//Checking to see if any one column is full and if not add a bird to that column
 		let data = this.grid.getColumn(x);
-		if (data === false) {
-			console.log("column full");
-		} else {
-			this.bird = this.birdsGroup.add(new Birds(this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
-		}
 
 		//Switching bird by adding 1 to counter when 'penguin' is dropped and subtracting 1 from counter when 'parrot' is dropped
 		if (this.playerCurrent === 0) {
-			this.bird = this.birdsGroup.add(new Birds(this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
+			let bird = this.birdsGroup.add(new Birds(this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
+			this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
+			console.log(this.grid.gridArr);
+
 			this.penguinFx.play();
 			this.playerCurrent += 1;
 
 		} else {
-			this.bird = this.birdsGroup.add(new Birds(this.game, data.x, data.y, this.birds[1].frame, this, data.pos));
+			let bird = this.birdsGroup.add(new Birds(this.game, data.x, data.y, this.birds[1].frame, this, data.pos));
+			this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
+			console.log(this.grid.gridArr);
+
+
 			this.parrotFx.play();
 			this.playerCurrent -= 1;
 
 		}
+
+		//Call checMatch function from Grid.js
+		this.grid.checkMatch();
+
+
 	}
+
 
 
 }

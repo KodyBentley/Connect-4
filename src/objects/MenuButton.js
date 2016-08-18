@@ -1,3 +1,5 @@
+
+
 export default class MenuButton extends Phaser.Sprite {
 	constructor(game, x, y, key, state) {
 		super(game, x, y, key);
@@ -15,5 +17,7 @@ export default class MenuButton extends Phaser.Sprite {
 		this.events.onInputUp.add(function() {
 				this._game.state.start(this._state);
 		}, this);
+		
+
 	}
 }

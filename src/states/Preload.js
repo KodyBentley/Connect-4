@@ -4,13 +4,20 @@ export default class Preload extends Phaser.State {
         this.game.load.onLoadStart.add(this.loadStart, this);
         this.game.load.onFileComplete.add(this.fileComplete, this);
         this.game.load.onLoadComplete.add(this.loadComplete, this);
+
+        //Had to define the scores globally to have access to them across the objects and states
+        //There is a more efficient way to do this
+        this.game.p1Score = 0;
+        this.game.p2Score = 0;
+        
         this.start();
     }
 
     start() {
         //load game buttons
         this.game.load.spritesheet('playButton', 'assets/main/playButton2.png', 300, 102, 2);
-        
+        this.game.load.image('soundButton', 'assets/main/soundButton.png');
+
 
         //Load background images
         this.game.load.image('menuBackground', 'assets/main/bg.png');
@@ -29,9 +36,14 @@ export default class Preload extends Phaser.State {
         this.load.audio('penguinFx', 'assets/main/penguin.wav');
         this.load.audio('parrotFx', 'assets/main/parrot.wav');
         this.load.audio('menuFx', 'assets/main/menuFx.mp3');
+        this.load.audio('gameOverFx', 'assets/main/gameOverFx.mp3');
+
 
         //Load menu title image
         this.game.load.image('menuText', 'assets/main/menuText.png');
+
+        //Gameover winner image
+        this.game.load.image('winner', 'assets/main/winnerText.png');
 
 
 
@@ -49,7 +61,7 @@ export default class Preload extends Phaser.State {
 
     loadComplete() {
         console.log('preload complete')
-           
+
         this.game.stateChange.fadeOut(null, 'Menu');
     }
 }

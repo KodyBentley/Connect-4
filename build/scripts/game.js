@@ -25,6 +25,10 @@ var _statesGame = require('states/Game');
 
 var _statesGame2 = _interopRequireDefault(_statesGame);
 
+var _statesGameover = require('states/Gameover');
+
+var _statesGameover2 = _interopRequireDefault(_statesGameover);
+
 var Game = (function (_Phaser$Game) {
 	_inherits(Game, _Phaser$Game);
 
@@ -36,6 +40,7 @@ var Game = (function (_Phaser$Game) {
 		this.state.add('Preload', _statesPreload2['default'], false);
 		this.state.add('Menu', _statesMenu2['default'], false);
 		this.state.add('Game', _statesGame2['default'], false);
+		this.state.add('Gameover', _statesGameover2['default'], false);
 		this.state.start('Boot');
 	}
 
@@ -44,7 +49,7 @@ var Game = (function (_Phaser$Game) {
 
 new Game();
 
-},{"states/Boot":7,"states/Game":8,"states/Menu":9,"states/Preload":10}],2:[function(require,module,exports){
+},{"states/Boot":7,"states/Game":8,"states/Gameover":9,"states/Menu":10,"states/Preload":11}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -154,6 +159,10 @@ var _objectsBirds = require('objects/Birds');
 
 var _objectsBirds2 = _interopRequireDefault(_objectsBirds);
 
+var _statesGameover = require('states/Gameover');
+
+var _statesGameover2 = _interopRequireDefault(_statesGameover);
+
 var Grid = (function () {
     function Grid(game, state, parent, row, col) {
         _classCallCheck(this, Grid);
@@ -168,6 +177,43 @@ var Grid = (function () {
         value: function setup() {
             //Call create grid function
             this.createGrid();
+
+            //Call create grid array function
+            this.createGridArr();
+
+            //Game won text
+            this.gamesWon = this._game.add.text(635, 20, 'Games Won', {
+                fontSize: '32px',
+                fill: 'white'
+            });
+
+            //Check to see if player penguin best score is not null, if so add their best score so far from local storage
+            //Else it is null and just display their empty score
+            if (localStorage.getItem('p1BestScore') !== null) {
+                this.p1ScoreText = this._game.add.text(400, 50, 'Penguin Score: ' + localStorage.getItem('p1BestScore'), {
+                    fontSize: '32px',
+                    fill: 'white'
+                });
+            } else {
+                this.p1ScoreText = this._game.add.text(400, 50, 'Penguin Score: 0', {
+                    fontSize: '32px',
+                    fill: 'white'
+                });
+            }
+
+            //Check to see if player parrot best score is not null, if so add their best score so far from local storage
+            //Else it is null and just display their empty score
+            if (localStorage.getItem('p2BestScore') !== null) {
+                this.p2ScoreText = this._game.add.text(800, 50, 'Parrot Score: ' + localStorage.getItem('p2BestScore'), {
+                    fontSize: '32px',
+                    fill: 'white'
+                });
+            } else {
+                this.p2ScoreText = this._game.add.text(800, 50, 'Parrot Score: 0 ', {
+                    fontSize: '32px',
+                    fill: 'white'
+                });
+            }
         }
 
         //Create grid function start
@@ -237,26 +283,31 @@ var Grid = (function () {
                     pos2: {
                         y: 684,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 1,
+                        gY: 1
 
                     },
                     pos3: {
                         y: 523,
                         player: null,
-                        sprite: null
-
+                        sprite: null,
+                        gX: 1,
+                        gY: 2
                     },
                     pos4: {
                         y: 365,
                         player: null,
-                        sprite: null
-
+                        sprite: null,
+                        gX: 1,
+                        gY: 3
                     },
                     pos5: {
                         y: 204,
                         player: null,
-                        sprite: null
-
+                        sprite: null,
+                        gX: 1,
+                        gY: 4
                     }
 
                 },
@@ -266,30 +317,40 @@ var Grid = (function () {
                     pos1: {
                         y: 843,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 2,
+                        gY: 0
                     },
                     pos2: {
                         y: 684,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 2,
+                        gY: 1
 
                     },
                     pos3: {
                         y: 523,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 2,
+                        gY: 2
 
                     },
                     pos4: {
                         y: 365,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 2,
+                        gY: 3
 
                     },
                     pos5: {
                         y: 204,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 2,
+                        gY: 4
 
                     }
 
@@ -300,30 +361,40 @@ var Grid = (function () {
                     pos1: {
                         y: 843,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 3,
+                        gY: 0
                     },
                     pos2: {
                         y: 684,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 3,
+                        gY: 1
 
                     },
                     pos3: {
                         y: 523,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 3,
+                        gY: 2
 
                     },
                     pos4: {
                         y: 365,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 3,
+                        gY: 3
 
                     },
                     pos5: {
                         y: 204,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 3,
+                        gY: 4
 
                     }
 
@@ -334,30 +405,40 @@ var Grid = (function () {
                     pos1: {
                         y: 843,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 4,
+                        gY: 0
                     },
                     pos2: {
                         y: 684,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 4,
+                        gY: 1
 
                     },
                     pos3: {
                         y: 523,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 4,
+                        gY: 2
 
                     },
                     pos4: {
                         y: 365,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 4,
+                        gY: 3
 
                     },
                     pos5: {
                         y: 204,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 4,
+                        gY: 4
 
                     }
 
@@ -368,30 +449,40 @@ var Grid = (function () {
                     pos1: {
                         y: 843,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 5,
+                        gY: 0
                     },
                     pos2: {
                         y: 684,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 5,
+                        gY: 1
 
                     },
                     pos3: {
                         y: 523,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 5,
+                        gY: 2
 
                     },
                     pos4: {
                         y: 365,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 5,
+                        gY: 3
 
                     },
                     pos5: {
                         y: 204,
                         player: null,
-                        sprite: null
+                        sprite: null,
+                        gX: 5,
+                        gY: 4
 
                     }
 
@@ -401,6 +492,15 @@ var Grid = (function () {
         }
 
         //Create grid function end
+
+        //Create grid array for match check
+    }, {
+        key: 'createGridArr',
+        value: function createGridArr() {
+            this.gridArr = [[null, null, null, null, null], [null, null, null, null, null], [null, null, null, null, null], [null, null, null, null, null], [null, null, null, null, null], [null, null, null, null, null]];
+        }
+
+        //Grid array end
 
         /**
          * getColumn is checking for user input in reference to column position
@@ -418,10 +518,6 @@ var Grid = (function () {
             var column4 = this.grid.column4;
             var column5 = this.grid.column5;
             var column6 = this.grid.column6;
-            /**
-             * This is where the checkMatch would be called
-             */
-            // this.checkMatch();
 
             if (x >= column1.x && x <= column1.x + column1.width) {
                 newX = column1.x + column1.width / 2;
@@ -554,91 +650,138 @@ var Grid = (function () {
 
         //getColumn end
 
-        /**
-         * checkMatch would be where a check would be made to see if you have won the game, by using a position object to see if there is a relative 'match' around that particular
-         * sprite.
-         */
+        //Function to check if there is a match by iterating through the grid array then using the position
+        //object to check if any sprites next to each other are the same
+        //If they are call the game won function for that particular sprite
+    }, {
+        key: 'checkMatch',
+        value: function checkMatch(x, y, grid) {
+            var position = {
+                0: {
+                    x: -1,
+                    y: 0
+                },
+                1: {
+                    x: -1,
+                    y: 1
+                },
+                2: {
+                    x: 0,
+                    y: 1
+                },
+                3: {
+                    x: 1,
+                    y: 1
+                },
+                4: {
+                    x: 1,
+                    y: 0
+                },
+                5: {
+                    x: 1,
+                    y: -1
+                },
+                6: {
+                    x: 0,
+                    y: -1
+                },
+                7: {
+                    x: -1,
+                    y: -1
+                }
 
-        // checkMatch() {
-        //     console.log(this.getPenguin(0, 3));
-        //     let position = {
-        //         0: {
-        //             x: -1,
-        //             y: 0
-        //         },
-        //         1: {
-        //             x: -1,
-        //             y: 1
-        //         },
-        //         2: {
-        //             x: 0,
-        //             y: 1
-        //         },
-        //         3: {
-        //             x: 1,
-        //             y: 1
-        //         },
-        //         4: {
-        //             x: 1,
-        //             y: 0
-        //         },
-        //         4: {
-        //             x: 1,
-        //             y: -1
-        //         },
-        //         5: {
-        //             x: 0,
-        //             y: -1
-        //         },
-        //         6: {
-        //             x: -1,
-        //             y: -1
-        //         }
+            };
 
-        //     };
-        //     for (let column in this.grid) {
-        //         //itterate over each postiion
-        //         for (let position in this.grid[column]) {
-        //             //on each position, check direction
-        //             if (this.grid[column][position].gY !== undefined) {
-        //                 let bird = this.grid[column][position];
-        //                 for (let i in position) {
-        //                     console.log(bird);
-        //                     let newBird = this.getPenguin(bird.gX + position[i].x, bird.gY + position[i].y);
-        //                     if(bird.sprite !== null && newBird.sprite !== null){
-        //                         console.log(bird.sprite.frameName, newBird.sprite.frameName);
-        //                     if(bird.sprite.frameName === newBird.sprite.frameName) {
-        //                         console.log('Match 2');
+            for (var i = 0; i <= this.gridArr.length - 1; i++) {
 
-        //                     }
-        //                 }
+                for (var j = 0; j <= this.gridArr[i].length - 1; j++) {
+                    var birdC = this.gridArr[i][j];
 
-        //                 }
+                    for (var k in position) {
+                        if (this.gridArr[i + position[k].x] && this.gridArr[j + position[k].y]) {
+                            var birdT = this.gridArr[i + position[k].x][j + position[k].y];
+                            if (birdC && birdT) {
 
-        //             }
+                                if (birdC.frameName === birdT.frameName) {
+                                    var ncX = i + position[k].x + position[k].x;
+                                    var ncY = j + position[k].y + position[k].y;
+                                    if (this.gridArr[ncX] && this.gridArr[ncY]) {
 
-        //         }
-        //     }
+                                        var birdY = this.gridArr[ncX][ncY];
+                                        if (birdY) {
+                                            if (birdC.frameName === birdY.frameName) {
 
-        // }
+                                                var nbX = i + position[k].x + position[k].x + position[k].x;
+                                                var nbY = j + position[k].y + position[k].y + position[k].y;
+                                                if (this.gridArr[nbX] && this.gridArr[nbY]) {
+                                                    var birdB = this.gridArr[nbX][nbY];
+                                                    if (birdB) {
+                                                        if (birdC.frameName === birdB.frameName) {
+                                                            birdC.alpha = 0.5;
+                                                            birdY.alpha = 0.5;
+                                                            birdT.alpha = 0.5;
+                                                            birdB.alpha = 0.5;
+                                                            console.log(birdC.frameName);
+                                                            if (birdC.frameName === 'assets/main/penguin.png') {
+                                                                this._game.p1Score += 0.5;
+                                                                this.p1ScoreText.text = 'P1 Score: ' + this._game.p1Score;
+                                                                this.penguinGameWon();
 
-        /**
-         * getPenguin would be the function to get the particular position of when a 'bird' is dropped
-         */
+                                                                console.log('penguin won');
+                                                            }
+                                                            if (birdC.frameName === 'assets/main/parrot.png') {
+                                                                this._game.p2Score += 0.5;
+                                                                this.p2ScoreText.text = 'P2 Score: ' + this._game.p2Score;
+                                                                console.log('Parrot Won');
+                                                                this.parrotGameWon();
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        // getPenguin(x, y) {
-        //     for (let column in this.grid) {
-        //         for (let position in this.grid[column]) {
-        //             if (this.grid[column][position].gY !== undefined) {
-        //                 if (this.grid[column][position].gX === x && this.grid[column][position].gY === y) {
-        //                     return this.grid[column][position];
-        //                 }
-        //             }
-        //         }
-        //     }
+        //checkMatch end
 
-        // }
+        //Function that is called when the "penguin" player has won the game.
+        //Add 1 to local storage to keep track of that players wins.
+    }, {
+        key: 'penguinGameWon',
+        value: function penguinGameWon() {
+            // console.log(this.playerCurrent);
+            if (this._game.p1Score >= localStorage.getItem('p1BestScore')) {
+                localStorage.setItem('p1BestScore', this._game.p1Score);
+            } else if (this._game.p1Score < localStorage.getItem('p1BestScore')) {
+                localStorage.setItem('p1BestScore', this._game.p1Score);
+            }
+            this.p1ScoreText.content = 'P1 Score: 0 ' + localStorage.getItem('p1BestScore');
+            console.log(this._game.p1Score);
 
+            this._game.state.start('Gameover', true, false);
+        }
+
+        //Function that is called when the "parrot" player has won the game.
+        //Add 1 to local storage to keep track of that players wins.
+    }, {
+        key: 'parrotGameWon',
+        value: function parrotGameWon() {
+            if (this._game.p2Score >= localStorage.getItem('p2BestScore')) {
+                localStorage.setItem('p2BestScore', this._game.p2Score);
+            } else if (this._game.p2Score < localStorage.getItem('p2BestScore')) {
+                localStorage.setItem('p2BestScore', this._game.p2Score);
+            }
+            this.p1ScoreText.content = 'P2 Score: 0 ' + localStorage.getItem('p2BestScore');
+            console.log(this._game.p2Score);
+            this._game.state.start('Gameover', true, false);
+        }
     }]);
 
     return Grid;
@@ -647,7 +790,7 @@ var Grid = (function () {
 exports['default'] = Grid;
 module.exports = exports['default'];
 
-},{"objects/Birds":2}],5:[function(require,module,exports){
+},{"objects/Birds":2,"states/Gameover":9}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -916,22 +1059,26 @@ var Game = (function (_Phaser$State) {
 		value: function addBird(x) {
 			//Checking to see if any one column is full and if not add a bird to that column
 			var data = this.grid.getColumn(x);
-			if (data === false) {
-				console.log("column full");
-			} else {
-				this.bird = this.birdsGroup.add(new _objectsBirds2['default'](this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
-			}
 
 			//Switching bird by adding 1 to counter when 'penguin' is dropped and subtracting 1 from counter when 'parrot' is dropped
 			if (this.playerCurrent === 0) {
-				this.bird = this.birdsGroup.add(new _objectsBirds2['default'](this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
+				var bird = this.birdsGroup.add(new _objectsBirds2['default'](this.game, data.x, data.y, this.birds[0].frame, this, data.pos));
+				this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
+				console.log(this.grid.gridArr);
+
 				this.penguinFx.play();
 				this.playerCurrent += 1;
 			} else {
-				this.bird = this.birdsGroup.add(new _objectsBirds2['default'](this.game, data.x, data.y, this.birds[1].frame, this, data.pos));
+				var bird = this.birdsGroup.add(new _objectsBirds2['default'](this.game, data.x, data.y, this.birds[1].frame, this, data.pos));
+				this.grid.gridArr[data.pos.gX][data.pos.gY] = bird;
+				console.log(this.grid.gridArr);
+
 				this.parrotFx.play();
 				this.playerCurrent -= 1;
 			}
+
+			//Call checMatch function from Grid.js
+			this.grid.checkMatch();
 		}
 	}]);
 
@@ -942,6 +1089,90 @@ exports['default'] = Game;
 module.exports = exports['default'];
 
 },{"objects/Birds":2,"objects/Grid":4,"objects/gridOverlay":6}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _objectsMenuButton = require('objects/MenuButton');
+
+var _objectsMenuButton2 = _interopRequireDefault(_objectsMenuButton);
+
+var Gameover = (function (_Phaser$State) {
+	_inherits(Gameover, _Phaser$State);
+
+	function Gameover() {
+		_classCallCheck(this, Gameover);
+
+		_get(Object.getPrototypeOf(Gameover.prototype), 'constructor', this).apply(this, arguments);
+	}
+
+	_createClass(Gameover, [{
+		key: 'init',
+		value: function init() {}
+	}, {
+		key: 'create',
+		value: function create() {
+			//Add back ground image
+			this.add.image(0, 0, 'gameBackground');
+
+			//Create "Winner" sprite for game over state
+			var gameOverTitle = this.game.add.sprite(795, 475, "winner");
+			gameOverTitle.alpha = 0;
+			gameOverTitle.anchor.set(0.5);
+
+			//Tween to flash game over text
+			this.game.add.tween(gameOverTitle).to({
+				alpha: 1
+			}, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
+			//Add play button for this state
+			var buttonPlay = new _objectsMenuButton2['default'](this.game, this.game.width * 0.5, 800, 'playButton', 'Game');
+
+			//Added onOver and onOut tweens for play button
+			buttonPlay.events.onInputOver.add(this.onOver, this);
+			buttonPlay.events.onInputOut.add(this.onOut, this);
+		}
+
+		//Tween play button when the mouse is over
+	}, {
+		key: 'onOver',
+		value: function onOver(buttonPlay) {
+			this.game.add.tween(buttonPlay.scale).to({
+				x: 2.5,
+				y: 2.5
+			}, 350, Phaser.Easing.Linear.In).start();
+		}
+
+		//Tween play button when mouse is no longer over
+	}, {
+		key: 'onOut',
+		value: function onOut(buttonPlay) {
+			this.game.add.tween(buttonPlay.scale).to({
+				x: 2,
+				y: 2
+			}, 350, Phaser.Easing.Linear.In).start();
+		}
+	}]);
+
+	return Gameover;
+})(Phaser.State);
+
+exports['default'] = Gameover;
+module.exports = exports['default'];
+
+},{"objects/MenuButton":5}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -980,6 +1211,10 @@ var Menu = (function (_Phaser$State) {
 			//Create menu button
 			var buttonPlay = new _objectsMenuButton2['default'](this.game, this.game.width * 0.5, 800, 'playButton', 'Game');
 
+			//Create sound button and set the tint
+			var soundToggle = this.game.add.button(1450, 10, 'soundButton');
+			soundToggle.tint = null;
+
 			//Create player images on menu screen
 			var penguin = this.game.add.sprite(100, -200, 'penguin');
 			var parrot = this.game.add.sprite(1205, -200, 'parrot');
@@ -1014,6 +1249,9 @@ var Menu = (function (_Phaser$State) {
 			buttonPlay.events.onInputOver.add(this.onOver, this);
 			buttonPlay.events.onInputOut.add(this.onOut, this);
 
+			//Event for sound button click to mute game sound
+			soundToggle.onInputDown.add(this.muteSound, this);
+
 			//Add background music for menu screen
 			this.menuFx = this.game.add.audio('menuFx');
 			this.menuFx.loopFull();
@@ -1038,6 +1276,19 @@ var Menu = (function (_Phaser$State) {
 				y: 2
 			}, 350, Phaser.Easing.Linear.In).start();
 		}
+
+		//Function to mute sound when sound button is clicked
+	}, {
+		key: 'muteSound',
+		value: function muteSound(soundToggle) {
+			if (this.game.sound.mute === false) {
+				this.game.sound.mute = true;
+				soundToggle.tint = 16711680;
+			} else {
+				this.game.sound.mute = false;
+				soundToggle.tint = null;
+			}
+		}
 	}]);
 
 	return Menu;
@@ -1046,7 +1297,7 @@ var Menu = (function (_Phaser$State) {
 exports['default'] = Menu;
 module.exports = exports['default'];
 
-},{"objects/MenuButton":5}],10:[function(require,module,exports){
+},{"objects/MenuButton":5}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1076,6 +1327,12 @@ var Preload = (function (_Phaser$State) {
             this.game.load.onLoadStart.add(this.loadStart, this);
             this.game.load.onFileComplete.add(this.fileComplete, this);
             this.game.load.onLoadComplete.add(this.loadComplete, this);
+
+            //Had to define the scores globally to have access to them across the objects and states
+            //There is a more efficient way to do this
+            this.game.p1Score = 0;
+            this.game.p2Score = 0;
+
             this.start();
         }
     }, {
@@ -1083,6 +1340,7 @@ var Preload = (function (_Phaser$State) {
         value: function start() {
             //load game buttons
             this.game.load.spritesheet('playButton', 'assets/main/playButton2.png', 300, 102, 2);
+            this.game.load.image('soundButton', 'assets/main/soundButton.png');
 
             //Load background images
             this.game.load.image('menuBackground', 'assets/main/bg.png');
@@ -1099,9 +1357,13 @@ var Preload = (function (_Phaser$State) {
             this.load.audio('penguinFx', 'assets/main/penguin.wav');
             this.load.audio('parrotFx', 'assets/main/parrot.wav');
             this.load.audio('menuFx', 'assets/main/menuFx.mp3');
+            this.load.audio('gameOverFx', 'assets/main/gameOverFx.mp3');
 
             //Load menu title image
             this.game.load.image('menuText', 'assets/main/menuText.png');
+
+            //Gameover winner image
+            this.game.load.image('winner', 'assets/main/winnerText.png');
 
             this.loadStart();
         }

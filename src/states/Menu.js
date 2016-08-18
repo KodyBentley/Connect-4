@@ -10,6 +10,11 @@ export default class Menu extends Phaser.State {
 		//Create menu button
 		let buttonPlay = new MenuButton(this.game, this.game.width * 0.5, 800, 'playButton', 'Game');
 
+		//Create sound button and set the tint
+		let soundToggle = this.game.add.button(1450, 10, 'soundButton');
+		soundToggle.tint = null;
+
+
 
 		//Create player images on menu screen
 		let penguin = this.game.add.sprite(100, -200, 'penguin');
@@ -49,12 +54,13 @@ export default class Menu extends Phaser.State {
 		buttonPlay.events.onInputOver.add(this.onOver, this);
 		buttonPlay.events.onInputOut.add(this.onOut, this);
 
-
+		//Event for sound button click to mute game sound
+		soundToggle.onInputDown.add(this.muteSound, this);
+		
 
 		//Add background music for menu screen
 		this.menuFx = this.game.add.audio('menuFx');
 		this.menuFx.loopFull();
-
 
 
 	}
@@ -76,4 +82,17 @@ export default class Menu extends Phaser.State {
 		}, 350, Phaser.Easing.Linear.In).start();
 
 	}
+
+	//Function to mute sound when sound button is clicked
+	muteSound(soundToggle) {
+			if (this.game.sound.mute === false) {
+			this.game.sound.mute = true;
+			soundToggle.tint = 16711680;
+		} else {
+			this.game.sound.mute = false;
+			soundToggle.tint = null;
+		} 
+
+	}
+
 }
